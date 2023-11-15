@@ -40,7 +40,7 @@ def route_blockchain_mine():
 def route_wallet_transact():
     transaction_data = request.get_json()
     from backkend.wallet import wallet
-    transaction: Transaction = transaction_pool.existing_transaction(wallet.address)
+    transaction: Transaction = transaction_pool.existing_transaction(wallet.Wallet.address)
     if transaction:
         transaction.update_transaction(backkend.wallet.wallet,
                                        transaction_data['receiver'],

@@ -3,6 +3,7 @@ from pubnub.pnconfiguration import PNConfiguration
 from pubnub.callbacks import SubscribeCallback
 import time
 from backkend.blockchain.block import Block
+from backkend.blockchain.blockchain import Blockchain
 from backkend.wallet.transaction import Transaction
 from backkend.wallet.transaction_pool import TransactionPool
 
@@ -13,11 +14,12 @@ pubnubConfig.publish_key = 'pub-c-ef79c7dd-2005-408a-a877-5461c7f235e6'
 CHANNELS = {
     'START': 'START',
     'BLOCK': 'BLOCK',
-    'TRANSACTION' : 'TRANSACTION'
+    'TRANSACTION': 'TRANSACTION'
 }
 
 
 class Listener(SubscribeCallback):
+
     def __init__(self, blockchain, transaction_pool):
         self.transaction_pool = transaction_pool
         self.blockchain = blockchain
@@ -40,11 +42,12 @@ class Listener(SubscribeCallback):
                 print(f'\n -- The local chain was not replaced: {e}')
         elif message_object.channel == CHANNELS['TRANSACTION']:
             transaction = Transaction.deserilize_from_json(message_object.message)
+            # transaction_pool = TransactionPool.set_transaction(transaction)
             self.transaction_pool.set_transaction(transaction)
             print('\n -- Set the new transaction in the transaction pool')
 
 
-class PubSub():
+class PubSub:
     """This class enables communication between nodes of upskill blockchain network
     """
 
@@ -65,10 +68,20 @@ class PubSub():
         self.publish(CHANNELS['TRANSACTION'], transaction.serialize_to_json())
 
 
+# def main():
+#     pubsub = PubSub()
+#     time.sleep(1)
+#     pubsub.publish(CHANNELS['BLOCK'], {'test_data'})
+
+
 def main():
-    publish_subscribe = PubSub()
+    blockchain = Blockchain()
+    transaction_pool = TransactionPool()
+    pubsub = PubSub(blockchain, transaction_pool)
+    channel_to_publish = CHANNELS['BLOCK']
+    message_to_publish = {'data': 'test_data'}
     time.sleep(1)
-    publish_subscribe.publish(CHANNELS['BLOCK'], {'test': 'test_data'})
+    pubsub.publish(channel_to_publish, message_to_publish)
 
 
 if __name__ == '__main__':
