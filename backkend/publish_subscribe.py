@@ -9,8 +9,8 @@ from backkend.wallet.transaction_pool import TransactionPool
 
 # PubNub configuration
 pubnubConfig = PNConfiguration()
-pubnubConfig.subscribe_key = 'sub-c-597c880d-fdcc-4331-a490-ad845fae3516'
-pubnubConfig.publish_key = 'pub-c-ef79c7dd-2005-408a-a877-5461c7f235e6'
+pubnubConfig.subscribe_key = 'yout subscribe_key'
+pubnubConfig.publish_key = ' your publish_key'
 
 # Channels for communication
 CHANNELS = {
