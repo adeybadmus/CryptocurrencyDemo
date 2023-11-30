@@ -16,7 +16,16 @@ def get_blockchain_mine_a_block():
 
 
 def post_wallet_transaction(receiver, amount):
-    """Initiate a transaction from the wallet to the specified receiver with a given amount."""
+    """
+    Initiate a transaction from the wallet to the specified receiver with a given amount.
+
+    Args:
+        receiver (str): The address of the recipient.
+        amount (float): The amount to be transferred.
+
+    Returns:
+        dict: The JSON response containing information about the transaction.
+    """
     return requests.post(
         f'{BASE_URL}/wallet/transact',
         json={'receiver': receiver, 'amount': amount}
@@ -35,7 +44,7 @@ print(f'start_blockchain: {start_blockchain}')
 # Create a wallet and use its address as the recipient
 recipient = Wallet().address
 
-# Make a transactions from the wallet to the recipient
+# Make a transaction from the wallet to the recipient
 post_wallet_transact_1 = post_wallet_transaction(recipient, 21)
 print(f'\n post_wallet_transact_1 : {post_wallet_transact_1}')
 time.sleep(1)

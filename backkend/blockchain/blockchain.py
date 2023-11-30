@@ -1,18 +1,17 @@
 from backkend.blockchain.block import Block
 
-
 """
 This code defines a Blockchain class that represents a basic blockchain. 
 
-The class includes methods for
- 
- 1) Adding blocks
- 2) Replacing the chain
- 3) Serializing and deserializing from JSON
- 4) Validating the chain. 
- 
- The example usage at the end demonstrates the creation of a blockchain, adding four blocks, 
- and printing the blockchain's representation.
+The class includes methods for:
+
+1) Adding blocks
+2) Replacing the chain
+3) Serializing and deserializing from JSON
+4) Validating the chain. 
+
+The example usage at the end demonstrates the creation of a blockchain, adding four blocks, 
+and printing the blockchain's representation.
 """
 
 

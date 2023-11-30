@@ -22,7 +22,14 @@ def cryptographic_hash(*args):
 
 
 def main():
-    """Example usage of the cryptographic_hash function."""
+    """Example usage of the cryptographic_hash function.
+
+    Example 1:
+        Demonstrates hashing multiple arguments in different order.
+
+    Example 2:
+        Demonstrates hashing with the order of arguments reversed.
+    """
     # Example 1
     result1 = cryptographic_hash('Ade', 'Yinka', 200)
     print(f"cryptographic_hash('Ade', 'Yinka', 200): {result1}")

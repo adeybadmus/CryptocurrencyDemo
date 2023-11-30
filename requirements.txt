@@ -1,6 +1,29 @@
-pytest == 6.2.5
-flask == 2.0.2
-pubnub==4.1.6
-requests==2.27.1
-cryptography~=36.0.1
-Werkzeug==2.3.0
+"""
+This file contains the required dependencies for the project, along with their specific versions.
+
+Dependencies:
+- pytest: Testing framework for writing and executing unit tests.
+- flask: Micro web framework for building web applications.
+- pubnub: A real-time messaging service to enable communication between nodes in the blockchain network.
+- requests: Simplifies HTTP requests in Python.
+- cryptography: Provides cryptographic recipes and primitives.
+- Werkzeug: WSGI utility library for building web applications.
+"""
+
+# pytest: Testing framework for writing and executing unit tests.
+pytest_version = "6.2.5"
+
+# flask: Micro web framework for building web applications.
+flask_version = "2.0.2"
+
+# pubnub: A real-time messaging service to enable communication between nodes in the blockchain network.
+pubnub_version = "4.1.6"
+
+# requests: Simplifies HTTP requests in Python.
+requests_version = "2.27.1"
+
+# cryptography: Provides cryptographic recipes and primitives.
+cryptography_version = "36.0.1"
+
+# Werkzeug: WSGI utility library for building web applications.
+werkzeug_version = "2.3.0"
