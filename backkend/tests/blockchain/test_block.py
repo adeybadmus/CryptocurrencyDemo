@@ -1,6 +1,5 @@
-import time
 import pytest
-
+import time
 from backkend.blockchain.block import Block, GENESIS_DATA
 from backkend.config import MINE_RATE, SECONDS
 
@@ -8,7 +7,7 @@ from backkend.config import MINE_RATE, SECONDS
 def test_genesis():
     """Test the genesis method.
 
-    Checks:
+    This test checks:
     1. The created genesis instance is an instance of the Block class.
     2. Verify each key-value pair in GENESIS_DATA.
     """
@@ -21,7 +20,7 @@ def test_genesis():
 def test_mine_block():
     """Test the mine_block method.
 
-    Checks:
+    This test checks:
     1. The created block instance is an instance of the Block class.
     2. The data in the block is correct.
     3. The last_hash in the new block is that of the genesis block.
@@ -38,7 +37,7 @@ def test_mine_block():
 def test_block_difficulty():
     """Test the mine_block method and block difficulty.
 
-    Checks:
+    This test checks:
     1. The created block instance is an instance of the Block class.
     2. The data in the block is correct.
     3. The difficulty of the hash in the new block is equal to the difficulty set for the class.
@@ -52,7 +51,7 @@ def test_block_difficulty():
 def test_mine_rate():
     """Test the mine_block method and mine rate.
 
-    Checks:
+    This test checks:
     1. The created block instance is an instance of the Block class.
     2. The data in the block is correct.
     3. The difficulty of the hash in the new block is equal to the difficulty set for the class.
@@ -68,7 +67,7 @@ def test_mine_rate():
 def test_for_quickly_mined_block():
     """Test for quickly mined block.
 
-    Checks:
+    This test checks:
     The difficulty of the mined new block is one more than the last block.
     """
     last_block = Block.mine_block(Block.genesis(), 'test_data')
@@ -79,7 +78,7 @@ def test_for_quickly_mined_block():
 def test_for_slowly_mined_block():
     """Test for slowly mined block.
 
-    Checks:
+    This test checks:
     The difficulty of the mined new block is one less than the last block after sleeping for MINE_RATE / SECONDS.
     """
     last_block = Block.mine_block(Block.genesis(), 'food')
@@ -91,7 +90,7 @@ def test_for_slowly_mined_block():
 def test_mine_block_difficulty_decrement_is_limited_to_one():
     """Test that the difficulty decrement is limited to one.
 
-    Checks:
+    This test checks:
     The difficulty of the new mined block is set to 1 after sleeping for MINE_RATE / SECONDS.
     """
     last_block = Block(
@@ -120,7 +119,7 @@ def block(last_block):
 def test_is_a_valid_block(last_block, block):
     """Test if a block is valid.
 
-    Checks:
+    This test checks:
     The function is_a_valid_block should not raise any exceptions for a valid block.
     """
     Block.is_a_valid_block(last_block, block)
@@ -129,7 +128,7 @@ def test_is_a_valid_block(last_block, block):
 def test_is_a_valid_block_bad_last_hash(last_block, block):
     """Test if a block has a bad last hash.
 
-    Checks:
+    This test checks:
     The function should raise an exception with a message indicating the last_hash must be correct.
     """
     block.last_hash = 'bad last hash'
@@ -141,7 +140,7 @@ def test_is_a_valid_block_bad_last_hash(last_block, block):
 def test_block_validation_difficulty_was_skipped(last_block, block):
     """Test if block difficulty adjustment was skipped.
 
-    Checks:
+    This test checks:
     The function should raise an exception with a message indicating the difficulty adjustment must only be by 1.
     """
     skipped_difficulty = 5
@@ -155,7 +154,7 @@ def test_block_validation_difficulty_was_skipped(last_block, block):
 def test_it_is_a_valid_proof_of_work(last_block, block):
     """Test if it is a valid proof of work.
 
-    Checks:
+    This test checks:
     The function should raise an exception with a message indicating the proof of work requirement has not been met.
     """
     block.difficulty = 4
@@ -167,7 +166,7 @@ def test_it_is_a_valid_proof_of_work(last_block, block):
 def test_new_block_hash(last_block, block):
     """Test if the new block hash is correct.
 
-    Checks:
+    This test checks:
     The function should raise an exception with a message indicating the new block hash must be correct.
     """
     block.hash = '000incorrecthash'

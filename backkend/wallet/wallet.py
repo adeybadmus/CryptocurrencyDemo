@@ -1,6 +1,6 @@
 """
-This is a representation of a miners wallet.
-It holds information of the miners crypto balance
+This is a representation of a miner's wallet.
+It holds information of the miner's crypto balance
 And it allows the miner to authorize transactions
 """
 import uuid
@@ -13,14 +13,14 @@ import json
 
 
 class Wallet:
-    address = str(uuid.uuid4())[0:8]
-    balance = STARTING_BALANCE
+    # address = str(uuid.uuid4())[0:8]
+    # balance = STARTING_BALANCE
 
     def __init__(self):
-        # self.address = str(uuid.uuid4())[0:8]
-        # self.balance = STARTING_BALANCE
+        self.address = str(uuid.uuid4())[0:8]
+        self.balance = STARTING_BALANCE
         self.private_key = ec.generate_private_key(
-            ec.SECP256K1,
+            ec.SECP256K1(),
             default_backend()
         )
         self.public_key = self.private_key.public_key()
@@ -46,7 +46,6 @@ class Wallet:
                 json.dumps(data).encode('utf-8'),
                 ec.ECDSA(hashes.SHA256())
             )
-
             return True
         except InvalidSignature:
             return False

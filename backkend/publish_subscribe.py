@@ -7,10 +7,12 @@ from backkend.blockchain.blockchain import Blockchain
 from backkend.wallet.transaction import Transaction
 from backkend.wallet.transaction_pool import TransactionPool
 
+# PubNub configuration
 pubnubConfig = PNConfiguration()
 pubnubConfig.subscribe_key = 'sub-c-597c880d-fdcc-4331-a490-ad845fae3516'
 pubnubConfig.publish_key = 'pub-c-ef79c7dd-2005-408a-a877-5461c7f235e6'
 
+# Channels for communication
 CHANNELS = {
     'START': 'START',
     'BLOCK': 'BLOCK',
@@ -19,12 +21,20 @@ CHANNELS = {
 
 
 class Listener(SubscribeCallback):
+    """Listener class to handle incoming messages on subscribed channels.
+    """
 
     def __init__(self, blockchain, transaction_pool):
         self.transaction_pool = transaction_pool
         self.blockchain = blockchain
 
     def message(self, pubnub, message_object):
+        """Handle incoming messages on subscribed channels.
+
+        Args:
+            pubnub: PubNub instance.
+            message_object: Message received from the channel.
+        """
         print(f'n --our incoming message: {message_object}')
 
         if message_object.channel == CHANNELS['BLOCK']:
@@ -42,13 +52,12 @@ class Listener(SubscribeCallback):
                 print(f'\n -- The local chain was not replaced: {e}')
         elif message_object.channel == CHANNELS['TRANSACTION']:
             transaction = Transaction.deserilize_from_json(message_object.message)
-            # transaction_pool = TransactionPool.set_transaction(transaction)
             self.transaction_pool.set_transaction(transaction)
             print('\n -- Set the new transaction in the transaction pool')
 
 
 class PubSub:
-    """This class enables communication between nodes of upskill blockchain network
+    """This class enables communication between nodes of upskill blockchain network.
     """
 
     def __init__(self, blockchain, transaction_pool):
@@ -57,24 +66,34 @@ class PubSub:
         self.pubnub.add_listener(Listener(blockchain, transaction_pool))
 
     def publish(self, channel, message):
-        """Deals with publishing of messages into our channel
+        """Publish messages into the specified channel.
+
+        Args:
+            channel (str): Channel to publish the message.
+            message (dict): Message to be published.
         """
         self.pubnub.publish().channel(channel).message(message).sync()
 
     def broadcast_a_block(self, block):
+        """Broadcast a block to the BLOCK channel.
+
+        Args:
+            block (Block): Block to be broadcasted.
+        """
         self.publish(CHANNELS['BLOCK'], block.to_json())
 
     def broadcast_a_transaction(self, transaction):
+        """Broadcast a transaction to the TRANSACTION channel.
+
+        Args:
+            transaction (Transaction): Transaction to be broadcasted.
+        """
         self.publish(CHANNELS['TRANSACTION'], transaction.serialize_to_json())
 
 
-# def main():
-#     pubsub = PubSub()
-#     time.sleep(1)
-#     pubsub.publish(CHANNELS['BLOCK'], {'test_data'})
-
-
 def main():
+    """Example usage of the PubSub class to publish a block message.
+    """
     blockchain = Blockchain()
     transaction_pool = TransactionPool()
     pubsub = PubSub(blockchain, transaction_pool)
