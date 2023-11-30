@@ -113,7 +113,7 @@ class Block:
         last_hash = last_block.hash
         difficulty = Block.adjust_mine_block_difficulty(last_block, timestamp)
         nonce = 0
-        from backend.utils.cryptographic_hash import cryptographic_hash
+        from backkend.utils.cryptographic_hash import cryptographic_hash
         hash = cryptographic_hash(
             timestamp, last_hash, data, difficulty, nonce)
         while hash[0:difficulty] != '0' * difficulty:
